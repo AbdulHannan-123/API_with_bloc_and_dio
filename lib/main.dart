@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   PostRepositories postrepositories = PostRepositories();
+  // ignore: unused_local_variable
   List<PostModel> postMaps = await postrepositories.fetchpost();
   runApp(const MyApp());
 }
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PostCubit(),
+      create: (context) => PostCubit.instance,
       child:const MaterialApp(
         home: HomeScreen(),
       ),
