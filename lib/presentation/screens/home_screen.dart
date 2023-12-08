@@ -21,6 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
+  List<PostModel> recippost = [];
+  List<PostModel> filterrecippost =[] ;
+
+
   TextEditingController controller = TextEditingController();
 
   @override
@@ -46,7 +50,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: controller,
                 onChanged: (value) {
                   setState(() {
-                    
+                    filterrecippost = recippost
+                    .where((item) => item.name!.toLowerCase().contains(value.toLowerCase()))
+                    .toList();
                   });
                 },
               ),
@@ -66,9 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
             
                  if( state is PostLoadedState){
                   return ListView.builder(
-                    itemCount: state.posts.length,
+                    itemCount: filterrecippost.isNotEmpty ? filterrecippost.length : state.posts.length,
                     itemBuilder: (context, index) {
-                      PostModel post = state.posts[index] ;
+                      recippost = state.posts;
+                      PostModel post =filterrecippost.isNotEmpty ?  filterrecippost[index] : state.posts[index] ;
                       return ListTile(
                         title: Text(post.name ?? "****"),
                         subtitle: Text(post.consistency.toString()),
